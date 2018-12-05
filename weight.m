@@ -1,19 +1,19 @@
 function w = weight(T, tris, Vtx, DelTris, Pp, Nrm)
 
-% 计算图片T中每个像素权重: w = cos(theta).^2/d.^2
+% calculate the composite weight: w = cos(theta)/d.^2
 
 tex_h = size(T,1);
 tex_w = size(T,2);
     
-% Nrm = GetVertexNormals_Area(Vtx, tris);
 d_2 = Vtx(:,1).^2 + Vtx(:,2).^2 + Vtx(:,3).^2;
 dmin = min(d_2);
 
-w_vtx = dmin * (Nrm(:,3).^2) ./ d_2;        % 获得顶点权重
+% Get vertex weights
+w_vtx = dmin * (Nrm(:,3).^2) ./ d_2;       
 
-% 插值获得每个像素权重
+% Interpolate to get the weight of each pixel
 w = zeros(tex_h,tex_w);
-tris( DelTris,:) = [];  % 删除三角形列表标记为1的行
+tris( DelTris,:) = []; 
 
 for i = 1:size(tris,1)
     
@@ -32,7 +32,7 @@ for i = 1:size(tris,1)
 
 end
 
-% 边缘权重
+% edge weight
 depth = zeros(tex_h,tex_w);
 
 for i = 1:size(tris,1)
@@ -52,12 +52,19 @@ for i = 1:size(tris,1)
 
 end
 
-BW = edge(depth);
-w_border = bwdist(BW);
-border_max = max(w_border(:));
-w_border = w_border / border_max;
 
-w = w.*w_border;
+% mask = (depth~=0);
+% BW = edge(mask);
+% w_border = bwdist(BW);
+% bmax = max(w_border(:));
+% w_border(w_border>(bmax/10)) = (bmax/2);
+% w_border = w_border + 0.05*bmax;
+% 
+% w_border = w_border.*mask;
+% border_max = max(w_border(:));
+% w_border = w_border / border_max;
+% w = w.*w_border;
+
 w = repmat(w,[1 1 3]);
 
 end
