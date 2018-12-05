@@ -36,7 +36,7 @@ disp('calculating weight done£¡');
 Tij = cell(1,N);
 wij = cell(1,N);
 
-figure(1)
+figure(2)
 h = plot(0,E(1,1));title('Energy function')
 axis([1 iters 0 0.04]);
 
@@ -203,7 +203,7 @@ for iter = 1:iters
 
     clearvars Tn Pi Pj DelTrisi DelTrisj Tsum wsum
 
-    figure(2);
+    figure(3);
     subplot(2,3,1);imshow(T{1},[]);title('T1');
     subplot(2,3,2);imshow(T{2},[]);title('T2');
     subplot(2,3,3);imshow(T{3},[]);title('T3');

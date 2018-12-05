@@ -32,8 +32,22 @@ disp('calculating UV Coordinates done£¡');
 
 Ss = I;
 
+Mm3 = zeros(size(Ss{3}));
+N_sum = Mm3;
+for k = 1:N
+    Map3 = immapping(Ss{3},Pp{3},Pp{k},DelTris{3},DelTris{k},tris);
+    mask = repmat(Map3(:,:,3),[1 1 3]);
+    MmN_3 = votemex(Ss{k}, Map3, [], 'cputiled', 1, [], [], [], [], double(~mask));
+    Mm3 = Mm3 + im2double(MmN_3);
+    N_sum = N_sum + double(MmN_3 ~= 0);
+end
+
+Mm3 = Mm3 ./ N_sum;
+
 % select the area to be optimized 
 pos = [2120,948,985,959];   
+figure(1),imshow(Mm3(pos(2):pos(2)+pos(4)-1,pos(1):pos(1)+pos(3)-1,:)...
+    ,[],'Border','tight','InitialMagnification',40);
 
 % label triangular faces of the selected area
 DelVtx = (Pp{3}(:,1)<pos(1) | Pp{3}(:,1)>pos(1)+pos(3)-1 | Pp{3}(:,2)<pos(2) | Pp{3}(:,2)>pos(2)+pos(4)-1);
@@ -86,3 +100,5 @@ for k = 1:N
     Imod{k} = I{k}.*double(~mask{k}) + Imod{k}.*double(mask{k});
     imwrite(Imod{k},['.\image\',char(k+64),'.rocD.mod.jpg'])
 end
+figure(4),imshow(Imod{3}(pos(2):pos(2)+pos(4)-1,pos(1):pos(1)+pos(3)-1,:),...
+    [],'Border','tight','InitialMagnification',40);
