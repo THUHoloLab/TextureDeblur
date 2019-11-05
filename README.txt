@@ -1,4 +1,8 @@
-This matlab code is used for eliminating artifacts like blurring, ghosting and color discontinuity in texture image of 3-D measurements.
+Matlab code for the paper
+
+J. Wu, H. Chen, X. Liu, L. Cao, X. Peng, and G. Jin, "Unsupervised texture reconstruction method using bidirectional similarity function for 3-D measurements," Optics Communications 439, 85-93 (2019).
+
+It is used for eliminating artifacts like blurring, ghosting and color discontinuity in texture image of 3-D measurements.
 
 1. Run the start, the algorithm will be unsupervised performed and generate optimized texture images saved in '.\image'.
 
